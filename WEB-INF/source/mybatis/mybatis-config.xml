@@ -9,4 +9,7 @@
         <!-- mybatis日志配置参考：http://www.mybatis.org/mybatis-3/zh/logging.html -->
         <setting name="logImpl" value="LOG4J"/>
     </settings>
+    <typeAliases>
+		<typeAlias type="com.gjw.ssm.web.bean.UserAccount" alias="UserAccount"/>
+	</typeAliases>
 </configuration>
