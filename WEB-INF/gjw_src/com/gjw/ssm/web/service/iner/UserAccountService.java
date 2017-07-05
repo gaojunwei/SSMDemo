@@ -1,5 +1,7 @@
 package com.gjw.ssm.web.service.iner;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -13,13 +15,37 @@ public class UserAccountService implements IUserAccountService {
 
 	@Resource
 	IUserDao userDao;
+
+	@Override
+	public int save(UserAccount uAccount) {
+		return userDao.saveObj(uAccount);
+	}
+
+	@Override
+	public int delete(UserAccount uAccount) {
+		return userDao.deleteObj(uAccount);
+	}
+
+	@Override
+	public int edit(UserAccount uAccount) {
+		return userDao.editObj(uAccount);
+	}
+
+	@Override
+	public UserAccount get(UserAccount uAccount) {
+		return userDao.getObj(uAccount);
+	}
+
+	@Override
+	public List<UserAccount> list(UserAccount uAccount) {
+		return userDao.listObj(uAccount);
+	}
+
 	/**
-	 * 获取用户信息
+	 * 根据 账号获取会员信息
 	 */
 	@Override
-	public UserAccount getUserInfoByCon(String con) {
-		return userDao.getUserInfoByCon(con);
+	public UserAccount getObjByAcct(String accout) {
+		return userDao.getObjByAcct(accout);
 	}
-	
-	
 }

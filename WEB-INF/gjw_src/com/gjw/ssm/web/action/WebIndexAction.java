@@ -1,11 +1,13 @@
 package com.gjw.ssm.web.action;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,8 @@ import com.gjw.ssm.web.utils.ParamFilter;
 @Controller
 @RequestMapping(path="/web")
 public class WebIndexAction {
+	
+	private static Logger logger = Logger.getLogger(WebIndexAction.class);
 	
 	@Autowired
 	IUserAccountService userAccountService;
@@ -83,16 +87,21 @@ public class WebIndexAction {
 			mv.addObject("mapBean", mapBean);
 			return mv;
 		}
-		
-		UserAccount user = userAccountService.getUserInfoByCon(" and u_acount ='"+userName+"'");
+		UserAccount con = new UserAccount();
+		con.setU_ACCOUNT(userName);
+		con.setU_PWD(userPwd);
+		//查询获取用户信息
+		UserAccount user = userAccountService.get(con);
 		if(user==null)
 		{
 			mapBean.put("reason", "该用户不存在");
 			mv.addObject("mapBean", mapBean);
 			return mv;
 		}
+		//保存登录信息到session中
+		request.getSession().setAttribute("userInfo", user);
 		mapBean.put("success", true);
-		mapBean.put("reason", user.getU_name()+"登陆成功");
+		mapBean.put("reason", user.getU_NAME()+"登陆成功");
 		mv.addObject("mapBean", mapBean);
 		return mv;
 	}
@@ -103,68 +112,52 @@ public class WebIndexAction {
 	@RequestMapping(path="/toreg")
 	public String toReg()
 	{
-		return "reg";
+		return "commen/reg";
 	}
 	
 	/**
 	 * 会员注册
 	 */
 	@RequestMapping(path="/userreg")
-	public String userReg(HttpServletRequest request,Model model)
+	public String userReg(HttpServletRequest request,UserAccount uAccount,Model model)
 	{
 		Map<String, Object> mapBean = new HashMap<String, Object>();
 		mapBean.put("success", false);
 		mapBean.put("data", "");
 		mapBean.put("reason", "");
-		
-		
-		if(request.getAttribute("u_acount")==null || request.getAttribute("u_pwd")==null || request.getAttribute("u_name")==null)
+		logger.info("come in user reg Methed********");
+		if(!ParamFilter.isExist(uAccount.getU_ACCOUNT()) || 
+			!ParamFilter.isExist(uAccount.getU_NAME()) || 
+			!ParamFilter.isExist(uAccount.getU_PWD()))
 		{
+			logger.info("参数不合法，注册失败");
 			mapBean.put("reason", "参数不合法，注册失败");
 			model.addAttribute("mapBean", mapBean);
 			return "result";
 		}
-		String u_acount = request.getAttribute("u_acount").toString();
-		String u_pwd = request.getAttribute("u_pwd").toString();
-		String u_name = request.getAttribute("u_name").toString();
-		String u_phone = request.getAttribute("u_phone")==null?"":request.getAttribute("u_phone").toString();
-		String u_email = request.getAttribute("u_email")==null?"":request.getAttribute("u_email").toString();
-		String u_sex = request.getAttribute("u_sex")==null?"":request.getAttribute("u_sex").toString();
-		
-		
-		
-		
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-		return "reg";
+		UserAccount users = userAccountService.getObjByAcct(uAccount.getU_ACCOUNT());
+		if(ParamFilter.isExist(users))
+		{
+			logger.info("该账号已存在，注册失败");
+			mapBean.put("reason", "该账号已存在，注册失败");
+			model.addAttribute("mapBean", mapBean);
+			return "result";
+		}
+		logger.info("该账号不存在，可以注册******");
+		uAccount.setC_TIME(new Date());
+		uAccount.setU_STATUS(1);
+		int a = userAccountService.save(uAccount);
+		logger.info("会员注册，返回影响行数******"+a);
+		if(a==1)
+		{
+			mapBean.put("success", true);
+			mapBean.put("reason", "该账号注册成功");
+			model.addAttribute("mapBean", mapBean);
+			return "result";
+		}
+		mapBean.put("reason", "注册信息保存失败，请重试");
+		model.addAttribute("mapBean", mapBean);
+		return "result";
 	}
 	
 }

@@ -23,14 +23,14 @@
 		<fieldset class="fieldset_css">
 			<legend>会员注册</legend>
 			<ul>
-				<li>登录账号：<input type="text" name="u_acount"></li>
-				<li>登录密码：<input type="text" name="u_pwd"></li>
-				<li>会员姓名：<input type="text" name="u_name"></li>
-				<li>手机号码：<input type="text" name="u_phone"></li>
-				<li>邮箱地址：<input type="text" name="u_email"></li>
+				<li>登录账号：<input type="text" name="U_ACCOUNT" value="admin"></li>
+				<li>登录密码：<input type="text" name="U_PWD" value="qq123456"></li>
+				<li>会员姓名：<input type="text" name="U_NAME" value="管理员"></li>
+				<li>手机号码：<input type="text" name="U_PHONE" value="13693615037"></li>
+				<li>邮箱地址：<input type="text" name="U_EMAIL" value="13693615037@qq.com"></li>
 				<li>会员性别：
-					<input type="radio" value="1" name="u_sex"><label for="">男</label>
-					<input type="radio" value="2" name="u_sex"><label for="">女</label>
+					<input type="radio" value="1" name="U_SEX" checked="checked"><label for="">男</label>
+					<input type="radio" value="2" name="U_SEX"><label for="">女</label>
 				</li>
 				<li><input type="submit" value="登录"></li>
 			</ul>

@@ -1,61 +1,71 @@
 package com.gjw.ssm.web.bean;
 
+import java.util.Date;
+
+
 public class UserAccount {
-	private int u_id;
-	private String u_acount;
-	private String u_name;
-	private String u_phone;
-	private String u_email;
-	private int u_sex;
-	private int u_status;
-	private String c_time;
+	private int U_ID;
+	private String U_ACCOUNT;
+	private String U_PWD;
+	private String U_NAME;
+	private String U_PHONE;
+	private String U_EMAIL;
+	private int U_SEX;
+	private int U_STATUS;
+	private Date C_TIME;
 	
-	public int getU_id() {
-		return u_id;
+	public int getU_ID() {
+		return U_ID;
 	}
-	public void setU_id(int u_id) {
-		this.u_id = u_id;
+	public void setU_ID(int u_ID) {
+		U_ID = u_ID;
 	}
-	public String getU_acount() {
-		return u_acount;
+	public String getU_ACCOUNT() {
+		return U_ACCOUNT;
 	}
-	public void setU_acount(String u_acount) {
-		this.u_acount = u_acount;
+	public void setU_ACCOUNT(String u_ACCOUNT) {
+		U_ACCOUNT = u_ACCOUNT;
 	}
-	public String getU_name() {
-		return u_name;
+	public String getU_NAME() {
+		return U_NAME;
 	}
-	public void setU_name(String u_name) {
-		this.u_name = u_name;
+	public void setU_NAME(String u_NAME) {
+		U_NAME = u_NAME;
 	}
-	public String getU_phone() {
-		return u_phone;
+	public String getU_PHONE() {
+		return U_PHONE;
 	}
-	public void setU_phone(String u_phone) {
-		this.u_phone = u_phone;
+	public void setU_PHONE(String u_PHONE) {
+		U_PHONE = u_PHONE;
 	}
-	public String getU_email() {
-		return u_email;
+	public String getU_EMAIL() {
+		return U_EMAIL;
 	}
-	public void setU_email(String u_email) {
-		this.u_email = u_email;
+	public void setU_EMAIL(String u_EMAIL) {
+		U_EMAIL = u_EMAIL;
 	}
-	public int getU_sex() {
-		return u_sex;
+	public int getU_SEX() {
+		return U_SEX;
 	}
-	public void setU_sex(int u_sex) {
-		this.u_sex = u_sex;
+	public void setU_SEX(int u_SEX) {
+		U_SEX = u_SEX;
 	}
-	public int getU_status() {
-		return u_status;
+	public int getU_STATUS() {
+		return U_STATUS;
 	}
-	public void setU_status(int u_status) {
-		this.u_status = u_status;
+	public void setU_STATUS(int u_STATUS) {
+		U_STATUS = u_STATUS;
 	}
-	public String getC_time() {
-		return c_time;
+	public Date getC_TIME() {
+		return C_TIME;
 	}
-	public void setC_time(String c_time) {
-		this.c_time = c_time;
+	public void setC_TIME(Date c_TIME) {
+		C_TIME = c_TIME;
+	}
+	public String getU_PWD() {
+		return U_PWD;
+	}
+	public void setU_PWD(String u_PWD) {
+		U_PWD = u_PWD;
 	}
 }

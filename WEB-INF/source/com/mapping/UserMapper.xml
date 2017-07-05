@@ -3,15 +3,57 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gjw.ssm.web.dao.imp.IUserDao" >
-	<update id="getUserInfoByID" parameterType="java.util.Map">
-		update ssz_user set xd_pwd='${ssz_pwd}' where 1=1 ${con}
-	</update>
-	
-	<insert id="insertUserAccount" parameterType="UserAccount">
-		insert into user_account 
-	</insert>
-	<select id="getUserInfoByCon" parameterType="java.lang.String" resultType="UserAccount" >
-		select * from user_account where 1=1 ${con}
+
+	<resultMap type="UserAccount" id="UserMap">
+		<id column="U_ID" property="U_ID"/>
+		<result column="U_ACCOUNT" property="U_ACCOUNT"/>
+		<result column="U_PWD" property="U_PWD"/>
+		<result column="U_NAME" property="U_NAME"/>
+		<result column="U_PHONE" property="U_PHONE"/>
+		<result column="U_EMAIL" property="U_EMAIL"/>
+		<result column="U_SEX" property="U_SEX"/>
+		<result column="U_STATUS" property="U_STATUS"/>
+		<result column="ROLE_ID" property="ROLE_ID"/>
+		<result column="C_TIME" property="C_TIME"/>
+	</resultMap>
+
+	<!-- 查询用户信息 - 会员登录或根据 会员id查询 -->
+	<select id="getObj" parameterType="UserAccount" resultMap="UserMap">
+		select * from user_account
+		where 1=1
+		<if test="U_ACCOUNT!=null and U_PWD!=null">
+			and U_ACCOUNT = #{U_ACCOUNT} and U_PWD=#{U_PWD}
+		</if>
+		<if test="U_ID!=null and U_ID>0">
+			and U_ID = #{U_ID}
+		</if>
+	</select>
+	<!-- 查询用户信息 - 根据会员账号 -->
+	<select id="getObjByAcct" parameterType="String" resultMap="UserMap">
+		select * from user_account where U_ACCOUNT = #{accout}
 	</select>
 	
+	
+	<!-- 保存用户信息  -->
+	<insert id="saveObj" parameterType="UserAccount">
+		insert into user_account (
+			U_ACCOUNT,
+			U_PWD,
+			U_NAME,
+			U_PHONE,
+			U_EMAIL,
+			U_SEX,
+			U_STATUS,
+			C_TIME
+		) values (
+			#{U_ACCOUNT},
+			#{U_PWD},
+			#{U_NAME},
+			#{U_PHONE},
+			#{U_EMAIL},
+			#{U_SEX},
+			#{U_STATUS},
+			#{C_TIME}
+		)
+	</insert>
 </mapper>
