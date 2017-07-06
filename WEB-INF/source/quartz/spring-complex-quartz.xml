@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+ 
+    <context:component-scan base-package="com.gjw.ssm.web.complex.task" />
+ 
+    <!-- 当你只需要去执行更复杂的处理时,把数据传递给预定的任务 -->
+    <!-- 集成方式：JobDetailFactoryBean，并且任务类需要继承QuartzJobBean-->
+	<!-- 定义jobDetail -->
+    <bean name="firstComplexJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">  
+        <property name="jobClass" value="com.gjw.ssm.web.complex.task.ComplexJob" />
+        <property name="jobDataMap">
+            <map>
+                <entry key="anotherBean" value-ref="anotherBean" />
+            </map>
+        </property>
+        <!-- durability 表示任务完成之后是否依然保留到数据库，默认false -->
+        <property name="durability" value="true" />
+    </bean>
+    
+    <!-- 触发器是CornTrigger 每5秒执行一次job -->
+    <bean id="cronTrigger"  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail" ref="firstComplexJobDetail" />  
+        <property name="cronExpression" value="0/5 * * ? * *" />  
+    </bean>
+    <!-- 定义核心调度器 -->
+    <bean  class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger" />
+            </list>
+        </property>
+    </bean>
+</beans>

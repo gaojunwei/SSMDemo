@@ -76,5 +76,7 @@
 		<property name="basePackage" value="com.gjw.ssm.web.dao.*" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 	</bean>
-	
+	<!--ssm 集成quartz(定时任务框架)  -->
+    <import resource="classpath:quartz/spring-simple-quartz.xml"/>
+    <import resource="classpath:quartz/spring-complex-quartz.xml"/>
 </beans>

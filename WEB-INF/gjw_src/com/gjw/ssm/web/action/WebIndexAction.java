@@ -159,5 +159,4 @@ public class WebIndexAction {
 		model.addAttribute("mapBean", mapBean);
 		return "result";
 	}
-	
 }

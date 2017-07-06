@@ -22,12 +22,12 @@
 		<legend>功能列表</legend>
 		<ul>
 			<c:choose>
-				<c:when test="${userinfo==null}">
+				<c:when test="${userInfo==null}">
 					<li><a href="web/tologin">登录</a></li>
 					<li><a href="web/toreg">注册</a></li>
 				</c:when>
 				<c:otherwise>
-					<li>欢迎您：${userinfo.name} - <a href="web/tologout">退出</a></li>
+					<li>欢迎您：${userInfo.getU_NAME()} - <a href="web/tologout">退出</a></li>
 				</c:otherwise>
 			</c:choose>
 		</ul>
